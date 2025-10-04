@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Lato } from "next/font/google";
 import "../globals.css";
+import Navbar from "./_components/Navbar/Navbar";
 
 const lato = Lato({
-  subsets: ["latin"], // required
-  variable: "--font-lato", // optional (for CSS variable use)
-  weight: ["400", "700"], // pick the weights you need
+  subsets: ["latin"],
+  variable: "--font-lato",
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -20,7 +21,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${lato.variable}`}>
-      <body className={`${lato.variable} bg-bg-color`}>{children}</body>
+      <body
+        className={`${lato.variable} bg-gradient-to-b from-black via-indigo-950 to-black text-white min-h-screen`}
+      >
+        {/* Navbar stays fixed across pages */}
+        <Navbar />
+
+        {/* Main content */}
+        <main className="relative z-10">{children}</main>
+      </body>
     </html>
   );
 }

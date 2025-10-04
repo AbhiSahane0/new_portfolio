@@ -4,3 +4,10 @@
   --font-display: var(--font-lato), sans-serif;
   --color-bg-color: oklch(20.8% 0.042 265.755);
 }
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
