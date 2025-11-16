@@ -4,11 +4,14 @@ import { useState } from "react";
 import {
   FaReact,
   FaNodeJs,
-  FaDatabase,
+  // FaDatabase,
   FaGithub,
   FaExternalLinkAlt,
   FaCode,
   FaDocker,
+  FaMobileAlt,
+  FaGlobe,
+  FaServer,
 } from "react-icons/fa";
 import { SiNextdotjs, SiMongodb, SiJavascript } from "react-icons/si";
 import { MdCloud } from "react-icons/md";
@@ -61,14 +64,40 @@ const floatingIcons = [
 const projects = [
   {
     id: 1,
-    title: "The Wild Oasis",
+    title: "The Wild Oasis – Client Website",
     year: "2025",
     description:
-      "A full-stack hotel management application with real-time data synchronization, enabling seamless CRUD operations for bookings, cabins, and guests.",
+      "A modern, SEO-optimized, fast hotel booking website built with Next.js, designed for guests to explore cabins, check availability, and make reservations.",
     features: [
-      "Implemented efficient client-side and server-state management using React Query, optimizing performance and reducing redundant API calls by 30%",
-      "Built dynamic, reusable, and responsive UI components with React Hook Form and Tailwind CSS",
-      "Real-time data synchronization with Supabase backend",
+      "Implemented server-rendered pages and dynamic routing using Next.js App Router",
+      "Built user authentication and session handling for secure booking flows",
+      "Integrated Supabase for real-time data sync between admin and customer interfaces",
+      "Optimized performance with image optimization, server actions, and caching strategies",
+    ],
+    techStack: [
+      "Next.js",
+      "Supabase",
+      "Tailwind CSS",
+      "Server Components",
+      "Next Auth",
+    ],
+    category: "Full-Stack",
+    gradient: "from-green-600 to-lime-600",
+    icon: <FaGlobe className="text-green-300" />,
+    github: "https://github.com/AbhiSahane0/The_Wild_Oasis_Website",
+    live: "https://the-wild-oasis-website-one-tau.vercel.app/",
+  },
+  {
+    id: 2,
+    title: "The Wild Oasis – Internal Tool",
+    year: "2025",
+    description:
+      "A production-grade internal hotel management tool built using React, designed to streamline daily operations including cabin management, bookings, and guest administration.",
+    features: [
+      "Implemented advanced client-side and server-state management using React Query for real-time updates",
+      "Built dynamic and reusable admin UI components with React Hook Form and Tailwind CSS",
+      "Integrated role-based flows for managing bookings, cabins, and guest operations",
+      "Achieved 30% reduction in redundant network calls through optimized caching and invalidations",
     ],
     techStack: [
       "React.js",
@@ -81,36 +110,65 @@ const projects = [
     category: "Full-Stack",
     gradient: "from-emerald-500 to-teal-600",
     icon: <MdCloud className="text-emerald-400" />,
-    github: "#",
-    live: "#",
+    github: "https://github.com/AbhiSahane0/the-wild-oasis",
+    live: undefined,
   },
+
+  // {
+  //   id: 3,
+  //   title: "P2P Data-Sharing Platform",
+  //   year: "2025",
+  //   description:
+  //     "A decentralized application enabling secure, real-time, and offline data sharing using peer-to-peer technology and IPFS.",
+  //   features: [
+  //     "Built decentralized file sharing with OTP-based user registration",
+  //     "Implemented message queuing for reliable file retrieval",
+  //     "Session management using localStorage for seamless user experience",
+  //   ],
+  //   techStack: [
+  //     "React.js",
+  //     "Redux",
+  //     "Peer.js",
+  //     "MongoDB",
+  //     "Express.js",
+  //     "IPFS",
+  //   ],
+  //   category: "Full-Stack",
+  //   gradient: "from-purple-500 to-pink-600",
+  //   icon: <FaDatabase className="text-purple-400" />,
+  //   github: "#",
+  //   live: "#",
+  // },
   {
-    id: 2,
-    title: "P2P Data-Sharing Platform",
-    year: "2025",
+    id: 7,
+    title: "Natours – RESTful Travel API",
+    year: "2024",
     description:
-      "A decentralized application enabling secure, real-time, and offline data sharing using peer-to-peer technology and IPFS.",
+      "A secure, scalable, and high-performance REST API for a tour booking platform, built using Node.js and Express. Designed following modern architecture patterns and production-ready standards.",
     features: [
-      "Built decentralized file sharing with OTP-based user registration",
-      "Implemented message queuing for reliable file retrieval",
-      "Session management using localStorage for seamless user experience",
+      "Built complete CRUD operations for tours, users, reviews, and bookings",
+      "Implemented advanced features like geospatial queries, filtering, sorting, pagination, and data aggregation",
+      "Added JWT-based authentication, authorization, password reset, and secure user management",
+      "Optimized performance with rate limiting, data sanitization, and error handling middleware",
+      "Used MVC architecture for clean code structure and maintainability",
     ],
     techStack: [
-      "React.js",
-      "Redux",
-      "Peer.js",
-      "MongoDB",
+      "Node.js",
       "Express.js",
-      "IPFS",
+      "MongoDB",
+      "Mongoose",
+      "JWT Authentication",
+      "MVC Architecture",
     ],
-    category: "Full-Stack",
-    gradient: "from-purple-500 to-pink-600",
-    icon: <FaDatabase className="text-purple-400" />,
-    github: "#",
-    live: "#",
+    category: "Backend",
+    gradient: "from-teal-600 to-emerald-600",
+    icon: <FaServer className="text-emerald-300" />,
+    github: "https://github.com/AbhiSahane0/natours-backend",
+    live: undefined,
   },
+
   {
-    id: 3,
+    id: 4,
     title: "MovieVerse Website",
     year: "2024",
     description:
@@ -124,11 +182,11 @@ const projects = [
     category: "Frontend",
     gradient: "from-blue-500 to-cyan-600",
     icon: <FaReact className="text-blue-400" />,
-    github: "#",
-    live: "#",
+    github: "https://github.com/AbhiSahane0/MovieVerse",
+    live: undefined,
   },
   {
-    id: 4,
+    id: 5,
     title: "SkyCast Weather App",
     year: "2024",
     description:
@@ -142,12 +200,38 @@ const projects = [
     category: "Frontend",
     gradient: "from-sky-500 to-blue-600",
     icon: <MdCloud className="text-sky-400" />,
+    github: "https://github.com/AbhiSahane0/Wheather.in",
+    live: "https://abhisahane0.github.io/Wheather.in/",
+  },
+  {
+    id: 6,
+    title: "React Native Blog App",
+    year: "2025",
+    description:
+      "A fully functional mobile blogging application built using React Native CLI, featuring seamless navigation, CRUD operations, and persistent global state management using context API.",
+    features: [
+      "Implemented dynamic stack navigation with type-safe routes using React Navigation and TypeScript",
+      "Built reusable UI components and forms with optimized state handling",
+      "Managed global blog state using Context API + Reducer pattern",
+      "Enabled creating, updating, and deleting blog posts with smooth UI feedback",
+      "Integrated device-specific debugging, optimized builds, and platform-specific fixes for Android and iOS",
+    ],
+    techStack: [
+      "React Native",
+      "TypeScript",
+      "Context API",
+      "React Navigation",
+      "React Native CLI",
+    ],
+    category: "Mobile App",
+    gradient: "from-orange-500 to-red-600",
+    icon: <FaMobileAlt className="text-orange-400" />,
     github: "#",
-    live: "#",
+    live: undefined,
   },
 ];
 
-const categories = ["All", "Full-Stack", "Frontend"];
+const categories = ["All", "Full-Stack", "Frontend", "Mobile App", "Backend"];
 
 export default function ProjectsPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -352,17 +436,20 @@ export default function ProjectsPage() {
                     <FaGithub size={18} />
                     Code
                   </motion.a>
-                  <motion.a
-                    href={project.live}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 border-2 border-white/20 text-white rounded-lg font-semibold text-sm hover:bg-white/10"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <FaExternalLinkAlt size={16} />
-                    Live
-                  </motion.a>
+                  {project.live ? (
+                    <motion.a
+                      href={project.live}
+                      target="_blank"
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 border border-white/20 rounded-lg text-white"
+                    >
+                      <FaExternalLinkAlt size={16} />
+                      Live
+                    </motion.a>
+                  ) : (
+                    <span className="flex-1 flex items-center justify-center px-4 py-2.5 border border-white/20 rounded-lg text-gray-400">
+                      Developed, but not deployed yet 🥲{" "}
+                    </span>
+                  )}
                 </div>
               </motion.div>
             </motion.div>

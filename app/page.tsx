@@ -27,6 +27,7 @@ const logos = [
     position: { top: "10%", left: "8%" },
     movement: { x: [-30, 30], y: [-20, 20] },
     duration: 18,
+    showOnMobile: true,
   },
   {
     id: 2,
@@ -34,6 +35,7 @@ const logos = [
     position: { top: "15%", right: "12%" },
     movement: { x: [-25, 25], y: [-30, 30] },
     duration: 22,
+    showOnMobile: true,
   },
   {
     id: 3,
@@ -41,6 +43,7 @@ const logos = [
     position: { top: "50%", left: "5%" },
     movement: { x: [-20, 20], y: [-35, 35] },
     duration: 20,
+    showOnMobile: true,
   },
   {
     id: 4,
@@ -48,6 +51,7 @@ const logos = [
     position: { top: "8%", right: "50%" },
     movement: { x: [-35, 35], y: [-25, 25] },
     duration: 25,
+    showOnMobile: true,
   },
   {
     id: 5,
@@ -55,6 +59,7 @@ const logos = [
     position: { bottom: "20%", left: "10%" },
     movement: { x: [-28, 28], y: [-22, 22] },
     duration: 19,
+    showOnMobile: true,
   },
   {
     id: 6,
@@ -62,6 +67,7 @@ const logos = [
     position: { bottom: "15%", right: "15%" },
     movement: { x: [-32, 32], y: [-28, 28] },
     duration: 23,
+    showOnMobile: false,
   },
   {
     id: 7,
@@ -69,6 +75,7 @@ const logos = [
     position: { top: "35%", left: "15%" },
     movement: { x: [-20, 10], y: [-30, 30] },
     duration: 21,
+    showOnMobile: true,
   },
   {
     id: 8,
@@ -76,6 +83,7 @@ const logos = [
     position: { top: "35%", right: "10%" },
     movement: { x: [-30, 30], y: [-20, 20] },
     duration: 17,
+    showOnMobile: true,
   },
   {
     id: 9,
@@ -83,6 +91,7 @@ const logos = [
     position: { bottom: "10%", left: "65%" },
     movement: { x: [-25, 25], y: [-32, 32] },
     duration: 24,
+    showOnMobile: true,
   },
   {
     id: 10,
@@ -90,6 +99,7 @@ const logos = [
     position: { top: "60%", right: "10%" },
     movement: { x: [-28, 28], y: [-25, 25] },
     duration: 20,
+    showOnMobile: true,
   },
   {
     id: 11,
@@ -97,6 +107,7 @@ const logos = [
     position: { bottom: "8%", left: "25%" },
     movement: { x: [-33, 33], y: [-27, 27] },
     duration: 22,
+    showOnMobile: false,
   },
   {
     id: 12,
@@ -104,6 +115,7 @@ const logos = [
     position: { top: "10%", left: "25%" },
     movement: { x: [-25, 25], y: [-20, 20] },
     duration: 19,
+    showOnMobile: false,
   },
   {
     id: 13,
@@ -111,6 +123,7 @@ const logos = [
     position: { bottom: "0%", left: "45%" },
     movement: { x: [-30, 30], y: [-25, 25] },
     duration: 21,
+    showOnMobile: true,
   },
   {
     id: 14,
@@ -118,6 +131,7 @@ const logos = [
     position: { top: "10%", right: "30%" },
     movement: { x: [-30, 30], y: [-25, 25] },
     duration: 21,
+    showOnMobile: false,
   },
 ];
 
@@ -128,7 +142,9 @@ export default function Page() {
       {logos.map((logo) => (
         <motion.div
           key={logo.id}
-          className="absolute cursor-pointer filter drop-shadow-lg"
+          className={`absolute cursor-pointer filter drop-shadow-lg ${
+            logo.showOnMobile ? "" : "hidden md:block"
+          }`}
           initial={{ x: 0, y: 0, rotate: 0, scale: 1, opacity: 0.7 }}
           animate={{
             x: logo.movement.x,
@@ -227,27 +243,30 @@ export default function Page() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <motion.button
-            className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-full shadow-lg cursor-pointer"
-            whileHover={{
-              scale: 1.05,
-              boxShadow: "0 0 30px rgba(6, 182, 212, 0.6)",
-            }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Link href={"/myProjects"}> View My Work</Link>
-          </motion.button>
-
-          <motion.button
-            className="px-8 py-3 border-2 border-white text-white font-semibold rounded-full backdrop-blur-sm cursor-pointer"
-            whileHover={{
-              scale: 1.05,
-              backgroundColor: "rgba(255, 255, 255, 0.1)",
-            }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Link href={"/contactMe"}>Get In Touch</Link>
-          </motion.button>
+          <Link href={"/myProjects"}>
+            <motion.button
+              className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-full shadow-lg cursor-pointer"
+              whileHover={{
+                scale: 1.05,
+                boxShadow: "0 0 30px rgba(6, 182, 212, 0.6)",
+              }}
+              whileTap={{ scale: 0.95 }}
+            >
+              View My Work
+            </motion.button>
+          </Link>
+          <Link href={"/contactMe"}>
+            <motion.button
+              className="px-8 py-3 border-2 border-white text-white font-semibold rounded-full backdrop-blur-sm cursor-pointer"
+              whileHover={{
+                scale: 1.05,
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+              }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Get In Touch
+            </motion.button>
+          </Link>
         </motion.div>
 
         {/* Decorative elements */}

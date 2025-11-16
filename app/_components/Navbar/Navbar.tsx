@@ -24,17 +24,19 @@ const Navbar = () => {
       >
         <ul className="flex gap-4 md:gap-6 justify-start md:justify-center items-center min-w-max">
           {navItems.map((item) => (
-            <li
-              key={item.name}
-              className={`cursor-pointer px-4 py-2 rounded-full font-medium whitespace-nowrap transition-all duration-300
+            <Link href={item.to} key={item.name}>
+              <li
+                key={item.name}
+                className={`cursor-pointer px-4 py-2 rounded-full font-medium whitespace-nowrap transition-all duration-300
                 ${
                   pathname === item.to
                     ? "bg-violet-600 text-white shadow-md"
                     : "text-gray-300 hover:text-white"
                 }`}
-            >
-              <Link href={item.to}>{item.name}</Link>
-            </li>
+              >
+                {item.name}
+              </li>
+            </Link>
           ))}
         </ul>
       </div>

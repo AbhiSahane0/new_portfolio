@@ -1,4 +1,5 @@
 "use client";
+
 import { motion } from "framer-motion";
 import { useState } from "react";
 import {
@@ -17,6 +18,8 @@ import {
   SiMongodb,
   SiExpress,
 } from "react-icons/si";
+
+import { sendFeedback } from "@/app/services/apis/sendFeedback";
 
 const floatingLogos = [
   {
@@ -90,23 +93,41 @@ export default function ContactPage() {
     email: "",
     message: "",
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+
+  const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
+
+    setErrorMsg("");
+    setSuccessMsg("");
+
+    if (!formData.name || !formData.email || !formData.message) {
+      setErrorMsg("Please fill all fields before submitting.");
+      return;
+    }
+
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      // alert("Message sent successfully! I'll get back to you soon.");
-      setFormData({ name: "", email: "", message: "" });
-      setIsSubmitting(false);
-    }, 1500);
+    const { success, error } = await sendFeedback(formData);
+
+    setIsSubmitting(false);
+
+    if (!success) {
+      setErrorMsg(error || "Something went wrong. Try again.");
+      return;
+    }
+
+    setSuccessMsg(
+      "Thanks for your message, it means a lot to me. I will get back to you soon."
+    );
+    setFormData({ name: "", email: "", message: "" });
   };
 
   return (
@@ -114,225 +135,104 @@ export default function ContactPage() {
       {floatingLogos.map((logo) => (
         <motion.div
           key={logo.id}
-          className="absolute cursor-pointer filter drop-shadow-lg opacity-60"
-          initial={{ x: 0, y: 0, rotate: 0, scale: 1 }}
-          animate={{
-            x: logo.movement.x,
-            y: logo.movement.y,
-            rotate: [0, 10, -10, 0],
-            opacity: [0.6, 0.8, 0.6],
-          }}
+          className="absolute opacity-60"
+          animate={{ x: logo.movement.x, y: logo.movement.y }}
           transition={{
             duration: logo.duration,
             repeat: Infinity,
             repeatType: "reverse",
-            ease: "easeInOut",
           }}
-          whileHover={{
-            scale: 1.3,
-            opacity: 1,
-            transition: { scale: { duration: 0.3 } },
-          }}
-          style={{
-            ...logo.position,
-            filter: "drop-shadow(0 0 15px rgba(255, 255, 255, 0.1))",
-          }}
+          style={logo.position}
         >
           {logo.icon}
         </motion.div>
       ))}
 
       <div className="relative z-10 max-w-2xl mx-auto">
-        <motion.div
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4">
-            Get In Touch
-          </h1>
+        <motion.div className="text-center mb-12">
+          <h1 className="text-6xl font-bold text-white mb-4">Get In Touch</h1>
           <p className="text-lg text-gray-300">
-            Let&apos;s collaborate and build something amazing together
+            Let&apos;s collaborate and build something amazing
           </p>
         </motion.div>
 
-        <motion.div
-          className="flex justify-center gap-6 mb-12"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <motion.a
+        {/* Social Icons */}
+        <div className="flex justify-center gap-6 mb-12">
+          <a
             href="https://www.linkedin.com/in/abhijit-sahane-034277229/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-4 bg-gradient-to-br from-blue-600 to-blue-800 rounded-full shadow-lg"
-            whileHover={{
-              scale: 1.15,
-              boxShadow: "0 0 30px rgba(37, 99, 235, 0.6)",
-              rotate: [0, -10, 10, -10, 0],
-            }}
-            transition={{ rotate: { duration: 0.5 } }}
-            whileTap={{ scale: 0.95 }}
+            className="p-4 bg-blue-700 rounded-full"
           >
             <FaLinkedin size={32} className="text-white" />
-          </motion.a>
-
-          <motion.a
+          </a>
+          <a
             href="https://github.com/AbhiSahane0"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-4 bg-gradient-to-br from-gray-700 to-gray-900 rounded-full shadow-lg"
-            whileHover={{
-              scale: 1.15,
-              boxShadow: "0 0 30px rgba(107, 114, 128, 0.6)",
-              rotate: [0, -10, 10, -10, 0],
-            }}
-            transition={{ rotate: { duration: 0.5 } }}
-            whileTap={{ scale: 0.95 }}
+            className="p-4 bg-gray-900 rounded-full"
           >
             <FaGithub size={32} className="text-white" />
-          </motion.a>
-
-          <motion.a
+          </a>
+          <a
             href="mailto:cloudabhi123@gmail.com"
-            className="p-4 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full shadow-lg"
-            whileHover={{
-              scale: 1.15,
-              boxShadow: "0 0 30px rgba(6, 182, 212, 0.6)",
-              rotate: [0, -10, 10, -10, 0],
-            }}
-            transition={{ rotate: { duration: 0.5 } }}
-            whileTap={{ scale: 0.95 }}
+            className="p-4 bg-cyan-600 rounded-full"
           >
             <FaEnvelope size={32} className="text-white" />
-          </motion.a>
-        </motion.div>
+          </a>
+        </div>
 
-        <motion.div
-          className="backdrop-blur-md bg-white/5 rounded-2xl p-8 shadow-2xl border border-white/10"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          <div className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-            >
-              <label
-                htmlFor="name"
-                className="block text-gray-300 font-semibold mb-2 text-sm"
-              >
-                Your Name
-              </label>
+        {/* Contact Form */}
+        <div className="backdrop-blur-md bg-white/5 rounded-2xl p-8 shadow-2xl border border-white/10">
+          {errorMsg && (
+            <p className="text-red-400 text-center mb-2">{errorMsg}</p>
+          )}
+          {successMsg && (
+            <p className="text-green-400 text-center mb-2">{successMsg}</p>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="text-gray-300">Your Name</label>
               <input
                 type="text"
-                id="name"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300"
-                placeholder="Your good name !"
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white"
+                placeholder="Your good name"
               />
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-            >
-              <label
-                htmlFor="email"
-                className="block text-gray-300 font-semibold mb-2 text-sm"
-              >
-                Your Email
-              </label>
+            <div>
+              <label className="text-gray-300">Your Email</label>
               <input
                 type="email"
-                id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300"
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white"
                 placeholder="yourEmail@gmail.com"
               />
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
-            >
-              <label
-                htmlFor="message"
-                className="block text-gray-300 font-semibold mb-2 text-sm"
-              >
-                Message (Optional)
-              </label>
+            <div>
+              <label className="text-gray-300">Message</label>
               <textarea
-                id="message"
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
                 rows={5}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300 resize-none"
-                placeholder="Tell me if you have any suggestion or enything else !"
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white"
+                placeholder="Tell me something..."
               />
-            </motion.div>
+            </div>
 
-            <motion.button
-              onClick={handleSubmit}
+            <button
+              type="submit"
               disabled={isSubmitting}
-              className="w-full py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold rounded-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              whileHover={
-                !isSubmitting
-                  ? {
-                      scale: 1.02,
-                      boxShadow: "0 0 40px rgba(6, 182, 212, 0.6)",
-                    }
-                  : {}
-              }
-              whileTap={!isSubmitting ? { scale: 0.98 } : {}}
+              className="w-full py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold rounded-lg disabled:opacity-50"
             >
-              {isSubmitting ? (
-                <span className="flex items-center justify-center gap-2">
-                  <motion.span
-                    animate={{ rotate: 360 }}
-                    transition={{
-                      duration: 1,
-                      repeat: Infinity,
-                      ease: "linear",
-                    }}
-                  >
-                    ⏳
-                  </motion.span>
-                  Sending...
-                </span>
-              ) : (
-                "Send Message"
-              )}
-            </motion.button>
-          </div>
-        </motion.div>
-
-        <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-full blur-3xl -z-10"
-          animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.2, 0.4, 0.2],
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
+              {isSubmitting ? "Sending..." : "Send Message"}
+            </button>
+          </form>
+        </div>
       </div>
     </section>
   );

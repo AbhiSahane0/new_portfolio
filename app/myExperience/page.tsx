@@ -42,6 +42,7 @@ const experiences = [
     duration: "June 2025 – Present",
     type: "Full-Time",
     location: "Pune",
+    workDuration: "5 Months",
     icon: <FaBriefcase className="text-cyan-400" />,
     techStack: [
       "TypeScript",
@@ -64,6 +65,7 @@ const experiences = [
     duration: "Oct 2023 – Jan 2024",
     type: "Internship",
     location: "Remote",
+    workDuration: "3 Months",
     icon: <FaCode className="text-purple-400" />,
     techStack: ["React.js", "Tailwind CSS", "Material UI", "Git", "GitHub"],
     achievements: [
@@ -153,33 +155,9 @@ export default function ExperiencePage() {
                   : "md:ml-auto md:pl-12 lg:pl-16"
               } md:w-1/2 w-full`}
               initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: index * 0.3 }}
             >
-              {/* Timeline Node */}
-              {/* <motion.div
-                className={`absolute left-3 md:left-auto ${
-                  index % 2 === 0 ? "md:right-[-25px]" : "md:left-[-25px]"
-                } top-0 w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br ${
-                  exp.color
-                } flex items-center justify-center shadow-lg z-10 border-2 md:border-4 border-gray-900`}
-                initial={{ scale: 0 }}
-                whileInView={{ scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.2 + 0.3 }}
-                whileHover={{
-                  scale: 1.2,
-                  boxShadow: `0 0 30px ${
-                    index === 0
-                      ? "rgba(6, 182, 212, 0.6)"
-                      : "rgba(168, 85, 247, 0.6)"
-                  }`,
-                }}
-              >
-                <div className="text-lg md:text-2xl">{exp.icon}</div>
-              </motion.div> */}
-
               {/* Experience Card */}
               <motion.div
                 className="backdrop-blur-md bg-white/5 rounded-xl md:rounded-2xl p-4 md:p-6 shadow-2xl border border-white/10 hover:border-white/20 transition-all duration-300"
@@ -206,7 +184,7 @@ export default function ExperiencePage() {
                       📅 {exp.duration}
                     </span>
                     <span className="flex items-center gap-1">
-                      - {exp.location} - 3 Months
+                      - {exp.location} - {exp.workDuration}
                     </span>
                   </div>
                 </div>
@@ -223,7 +201,7 @@ export default function ExperiencePage() {
                         className="px-2 md:px-3 py-1 bg-white/10 rounded-full text-xs text-gray-300 border border-white/20"
                         initial={{ opacity: 0, scale: 0.8 }}
                         whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: true, amount: 0.1 }}
                         transition={{ delay: index * 0.2 + 0.5 + i * 0.05 }}
                         whileHover={{
                           scale: 1.1,
@@ -248,7 +226,7 @@ export default function ExperiencePage() {
                         className="text-xs md:text-sm text-gray-300 flex items-start gap-2"
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: true, amount: 0.1 }}
                         transition={{
                           delay: index * 0.2 + 0.6 + i * 0.1,
                         }}
@@ -270,7 +248,7 @@ export default function ExperiencePage() {
             className="relative text-center pt-8"
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.8 }}
           >
             <div className="inline-block px-4 md:px-6 py-2 md:py-3 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full text-white text-sm md:text-base font-semibold shadow-lg">
