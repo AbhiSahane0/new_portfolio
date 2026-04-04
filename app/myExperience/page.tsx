@@ -42,7 +42,7 @@ const experiences = [
     duration: "June 2025 – Present",
     type: "Full-Time",
     location: "Pune",
-    workDuration: "5 Months",
+    workDuration: "7 Months",
     icon: <FaBriefcase className="text-cyan-400" />,
     techStack: [
       "TypeScript",

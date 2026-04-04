@@ -114,31 +114,6 @@ const projects = [
     live: undefined,
   },
 
-  // {
-  //   id: 3,
-  //   title: "P2P Data-Sharing Platform",
-  //   year: "2025",
-  //   description:
-  //     "A decentralized application enabling secure, real-time, and offline data sharing using peer-to-peer technology and IPFS.",
-  //   features: [
-  //     "Built decentralized file sharing with OTP-based user registration",
-  //     "Implemented message queuing for reliable file retrieval",
-  //     "Session management using localStorage for seamless user experience",
-  //   ],
-  //   techStack: [
-  //     "React.js",
-  //     "Redux",
-  //     "Peer.js",
-  //     "MongoDB",
-  //     "Express.js",
-  //     "IPFS",
-  //   ],
-  //   category: "Full-Stack",
-  //   gradient: "from-purple-500 to-pink-600",
-  //   icon: <FaDatabase className="text-purple-400" />,
-  //   github: "#",
-  //   live: "#",
-  // },
   {
     id: 7,
     title: "Natours – RESTful Travel API",
