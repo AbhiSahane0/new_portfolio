@@ -1,13 +1,415 @@
 @import "tailwindcss";
 
+/* ============================================================
+   Design tokens — "Deep Space" premium theme
+   ============================================================ */
 @theme {
-  --font-display: var(--font-lato), sans-serif;
-  --color-bg-color: oklch(20.8% 0.042 265.755);
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* Space palette */
+  --color-void: #05050e;
+  --color-deep: #080816;
+  --color-nebula: #0d0b26;
+
+  --color-aurora-1: #7c3aed; /* violet   */
+  --color-aurora-2: #22d3ee; /* cyan     */
+  --color-aurora-3: #3b82f6; /* blue     */
+  --color-aurora-4: #e879f9; /* magenta  */
+  --color-aurora-5: #2dd4bf; /* teal     */
+
+  --color-ink-50: #f5f7ff;
+  --color-ink-200: #c7cce6;
+  --color-ink-300: #a9aed0;
+  --color-ink-400: #8b91b8;
+  --color-ink-500: #6b7196;
+
+  --shadow-glow: 0 0 40px -8px rgba(124, 58, 237, 0.5);
 }
+
+/* ============================================================
+   Theme surfaces — flip on [data-theme]
+   ============================================================ */
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --surface-glass: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.02)
+  );
+  --surface-glass-strong: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.09),
+    rgba(255, 255, 255, 0.03)
+  );
+  --border-glass: rgba(255, 255, 255, 0.09);
+  --border-glass-strong: rgba(255, 255, 255, 0.12);
+  --glass-shadow: 0 8px 40px -16px rgba(0, 0, 0, 0.6);
+  --chip-bg: rgba(255, 255, 255, 0.05);
+  --chip-border: rgba(255, 255, 255, 0.1);
+  --chip-fg: var(--color-ink-200);
+  --hairline-col: rgba(255, 255, 255, 0.18);
+  --gradient-border-grad: linear-gradient(
+    140deg,
+    rgba(124, 58, 237, 0.7),
+    rgba(34, 211, 238, 0.15) 40%,
+    rgba(34, 211, 238, 0) 60%,
+    rgba(232, 121, 249, 0.5)
+  );
+  --scrollbar-track: transparent;
+  --scrollbar-thumb: linear-gradient(180deg, #4c1d95, #164e63);
+  --star-mix: 0; /* 0 = light stars (dark bg) */
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  /* Flip the Tailwind color scales so ink + void utilities update automatically */
+  --color-void: #eef1fb;
+  --color-ink-50: #0e1428;
+  --color-ink-200: #33405e;
+  --color-ink-300: #46506e;
+  --color-ink-400: #59617f;
+  --color-ink-500: #7a839f;
+
+  --surface-glass: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.85),
+    rgba(255, 255, 255, 0.6)
+  );
+  --surface-glass-strong: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.92),
+    rgba(255, 255, 255, 0.72)
+  );
+  --border-glass: rgba(17, 22, 52, 0.1);
+  --border-glass-strong: rgba(17, 22, 52, 0.14);
+  --glass-shadow: 0 12px 40px -18px rgba(46, 30, 90, 0.35);
+  --chip-bg: rgba(255, 255, 255, 0.7);
+  --chip-border: rgba(17, 22, 52, 0.1);
+  --chip-fg: #45507a;
+  --hairline-col: rgba(17, 22, 52, 0.14);
+  --gradient-border-grad: linear-gradient(
+    140deg,
+    rgba(124, 58, 237, 0.55),
+    rgba(34, 211, 238, 0.12) 40%,
+    rgba(34, 211, 238, 0) 60%,
+    rgba(232, 121, 249, 0.4)
+  );
+  --scrollbar-track: transparent;
+  --scrollbar-thumb: linear-gradient(180deg, #a78bfa, #67e8f9);
+  --star-mix: 1; /* 1 = dark stars (light bg) */
+
+  /* Darken bright accent tints that are tuned for dark backgrounds so every
+     class-based accent (eyebrows, chips, role text, icons) stays legible. */
+  --color-cyan-200: #0e7490;
+  --color-cyan-300: #0891b2;
+  --color-cyan-400: #0e8aa8;
+  --color-teal-200: #0f766e;
+  --color-teal-300: #0d9488;
+  --color-emerald-200: #047857;
+  --color-emerald-300: #059669;
+  --color-sky-200: #0369a1;
+  --color-sky-300: #0284c7;
+  --color-violet-200: #6d28d9;
+  --color-violet-300: #7c3aed;
+  --color-fuchsia-200: #a21caf;
+  --color-fuchsia-300: #c026d3;
+  --color-amber-200: #b45309;
+  --color-amber-300: #d97706;
+  --color-lime-300: #4d7c0f;
+}
+
+/* Darken gradient-clipped accent titles in light mode (skills, etc.). */
+:root[data-theme="light"] .grad-clip {
+  filter: brightness(0.62) saturate(1.45);
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+:root {
+  --nav-offset: 4.5rem; /* clears the floating navbar; keeps anchored sections tight */
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-offset);
+}
+
+* {
+  border-color: var(--border-glass);
+}
+
+html,
+body {
+  background: var(--color-void);
+  color: var(--color-ink-50);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.5s ease;
+}
+
+body {
+  min-height: 100svh;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(124, 58, 237, 0.4);
+  color: #fff;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 99px;
+  border: 2px solid var(--color-void);
+}
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Focus ring for keyboard users only */
+:focus-visible {
+  outline: 2px solid var(--color-aurora-2);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ============================================================
+   Reusable component utilities
+   ============================================================ */
+.glass {
+  background: var(--surface-glass);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid var(--border-glass);
+  border-radius: 1.25rem;
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-strong {
+  background: var(--surface-glass-strong);
+  backdrop-filter: blur(22px) saturate(1.5);
+  -webkit-backdrop-filter: blur(22px) saturate(1.5);
+  border: 1px solid var(--border-glass-strong);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Gradient hairline border card (masked) */
+.gradient-border {
+  position: relative;
+}
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--gradient-border-grad);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+/* Aurora text gradient */
+.text-aurora {
+  background: linear-gradient(
+    100deg,
+    #c4b5fd 0%,
+    #7dd3fc 30%,
+    #67e8f9 55%,
+    #f0abfc 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+:root[data-theme="light"] .text-aurora {
+  background: linear-gradient(
+    100deg,
+    #7c3aed 0%,
+    #2563eb 32%,
+    #0891b2 58%,
+    #c026d3 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-soft {
+  background: linear-gradient(180deg, #ffffff 30%, #a9b0d6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Shimmering divider */
+.hairline {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--hairline-col),
+    transparent
+  );
+}
+
+/* Small pill / chip */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.8rem;
+  border-radius: 99px;
+  background: var(--chip-bg);
+  border: 1px solid var(--chip-border);
+  color: var(--chip-fg);
+  white-space: nowrap;
+}
+
+/* Glow on hover helper */
+.glow-hover {
+  transition: box-shadow 0.4s ease, transform 0.4s ease, border-color 0.4s ease;
+}
+
+/* Noise/grain overlay class */
+.grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+/* Live status dot */
+.status-dot {
+  position: relative;
+  width: 9px;
+  height: 9px;
+  border-radius: 99px;
+  background: #34d399;
+  box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7);
+  animation: ping 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* ============================================================
+   Keyframes
+   ============================================================ */
+@keyframes ping {
+  0% {
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.6);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 9px rgba(52, 211, 153, 0);
+  }
+}
+
+@keyframes auroraDrift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(4%, -3%, 0) scale(1.12);
+  }
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes gridScroll {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 60px;
+  }
+}
+
+@keyframes spinSlow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 38s linear infinite;
+}
+.animate-floaty {
+  animation: floaty 6s ease-in-out infinite;
+}
+.animate-spin-slow {
+  animation: spinSlow 26s linear infinite;
+}
+
+/* Animated grid backdrop */
+.grid-bg {
+  background-image: linear-gradient(
+      to right,
+      rgba(124, 58, 237, 0.08) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(34, 211, 238, 0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    #000 30%,
+    transparent 75%
+  );
+}
+
+/* ============================================================
+   Reduced motion — turn off decorative motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .animate-marquee,
+  .animate-floaty,
+  .animate-spin-slow,
+  .status-dot {
+    animation: none !important;
+  }
 }
