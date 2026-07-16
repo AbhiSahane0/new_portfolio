@@ -1,10 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  turbo: {
-    enabled: false,
-  },
+  reactStrictMode: true,
   eslint: {
+    // Portfolio ships fast; lint runs separately via `npm run lint`.
     ignoreDuringBuilds: true,
   },
 };
