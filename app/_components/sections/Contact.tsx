@@ -38,7 +38,7 @@ export default function Contact() {
     setStatus("sending");
     const { success, error: err } = await sendFeedback(form);
     if (!success) {
-      setError(err || "Something went wrong. Please try again.");
+      setError("Something went wrong. Please try again.");
       setStatus("error");
       return;
     }
