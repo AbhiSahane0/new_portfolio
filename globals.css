@@ -189,6 +189,29 @@ body {
   border-radius: 6px;
 }
 
+/* Tailwind v4's preflight ships `cursor: default` on buttons — restore the
+   expected pointer on every interactive control (nav items, CTAs, filters,
+   theme toggle, links, form controls). */
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+a[href],
+label[for],
+summary,
+select:not(:disabled),
+input[type="checkbox"]:not(:disabled),
+input[type="radio"]:not(:disabled),
+input[type="submit"]:not(:disabled),
+input[type="button"]:not(:disabled) {
+  cursor: pointer;
+}
+
+button:disabled,
+select:disabled,
+input:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
 /* ============================================================
    Reusable component utilities
    ============================================================ */
