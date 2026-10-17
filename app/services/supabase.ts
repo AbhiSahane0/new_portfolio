@@ -3,8 +3,6 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-console.log(url, anonKey, "Credentials");
-
 /** True only when both public env vars are present. */
 export const isSupabaseConfigured = Boolean(url && anonKey);
 
