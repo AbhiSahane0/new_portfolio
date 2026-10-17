@@ -669,7 +669,7 @@ export const testimonials = [
     name: "Narayan",
     role: "Real Estate Owner",
     project: "Room Rent SaaS",
-    href: undefined as string | undefined,
+    href: "https://rent-home-liart.vercel.app/",
     accent: "#22d3ee",
   },
 ];
