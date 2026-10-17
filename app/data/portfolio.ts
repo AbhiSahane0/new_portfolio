@@ -650,30 +650,27 @@ export const achievements: {
 ];
 
 /* ------------------------------------------------------------------ */
-/*  Testimonials (placeholders — replace with real client reviews)    */
+/*  Testimonials                                                       */
 /* ------------------------------------------------------------------ */
 
 export const testimonials = [
   {
     quote:
-      "Your review goes here. Abhijit turned our idea into a shipped product faster than we expected — and handled the parts we didn't even know we needed.",
-    name: "Your Client",
-    role: "Founder · Startup",
+      "Abhijit built our ERP system end to end — from the company website to the backend that runs our daily operations. He understood our business quickly and delivered something we actually use every day.",
+    name: "Sudeep Hase",
+    role: "Owner · Yuva Polyprint",
+    project: "ERP / SaaS system",
+    href: "https://yuva-polyprint-api.vercel.app/",
     accent: "#a855f7",
   },
   {
     quote:
-      "Placeholder testimonial. Rare to find a developer who owns frontend, backend and the release. Communication was clear the whole way through.",
-    name: "Future Client",
-    role: "Product Manager",
+      "Managing tenants, rent payments and bills used to be manual and messy. The app Abhijit built for my rooms business keeps everything in one place, and it's simple enough that I could use it from day one.",
+    name: "Narayan",
+    role: "Real Estate Owner",
+    project: "Room Rent SaaS",
+    href: "https://rent-home-liart.vercel.app/",
     accent: "#22d3ee",
-  },
-  {
-    quote:
-      "Reserved for a real review. He didn't just build the screens — he thought about our users, our data and how the thing scales.",
-    name: "Next Client",
-    role: "CTO · Agency",
-    accent: "#e879f9",
   },
 ];
 

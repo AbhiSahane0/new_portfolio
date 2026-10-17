@@ -20,14 +20,14 @@ export default function Testimonials() {
         eyebrow="Kind words"
         title={
           <>
-            What clients will say{" "}
-            <span className="text-aurora">— your review goes here</span>
+            What clients{" "}
+            <span className="text-aurora">say about working with me</span>
           </>
         }
-        subtitle="These are placeholders, reserved for the people I work with next. Want the first spot?"
+        subtitle="Real products built for real businesses. Want to be next?"
       />
 
-      <div className="mt-14 grid gap-5 md:grid-cols-3">
+      <div className="mt-14 grid gap-5 md:grid-cols-2">
         {testimonials.map((t, i) => (
           <motion.figure
             key={i}
@@ -54,10 +54,22 @@ export default function Testimonials() {
                   .map((w) => w[0])
                   .join("")}
               </span>
-              <div>
+              <div className="flex-grow">
                 <p className="text-sm font-semibold text-ink-50">{t.name}</p>
                 <p className="text-xs text-ink-400">{t.role}</p>
               </div>
+              {t.href ? (
+                <a
+                  href={t.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-medium text-ink-300 underline-offset-4 hover:underline"
+                >
+                  {t.project} ↗
+                </a>
+              ) : (
+                <span className="text-xs text-ink-400">{t.project}</span>
+              )}
             </figcaption>
           </motion.figure>
         ))}
